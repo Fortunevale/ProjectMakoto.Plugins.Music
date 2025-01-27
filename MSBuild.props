@@ -1,0 +1,9 @@
+﻿<Project>
+  <PropertyGroup>
+    <BuildProjectReferences>false</BuildProjectReferences>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ValidateArchitecture>false</ValidateArchitecture>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="MSBuild.props" />
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageOutputPath>$(OutputPath)</PackageOutputPath>
+    <BaseOutputPath>bin\</BaseOutputPath>
+	<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+	<ValidateArchitecture>false</ValidateArchitecture>
+	<Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="deps\**" />
+    <Compile Remove="Tools\**" />
+    <EmbeddedResource Remove="deps\**" />
+    <EmbeddedResource Remove="Tools\**" />
+    <None Remove="deps\**" />
+    <None Remove="Tools\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <Reference Include="DisCatSharp">
+		  <HintPath>deps\DisCatSharp.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ProjectMakoto">
+		  <HintPath>deps\ProjectMakoto.dll</HintPath>
+	  </Reference>
+	  <Reference Include="DisCatSharp.Common">
+		  <HintPath>deps\DisCatSharp.Common.dll</HintPath>
+	  </Reference>
+	  <Reference Include="DisCatSharp.ApplicationCommands">
+		  <HintPath>deps\DisCatSharp.ApplicationCommands.dll</HintPath>
+	  </Reference>
+	  <Reference Include="DisCatSharp.Interactivity">
+		  <HintPath>deps\DisCatSharp.Interactivity.dll</HintPath>
+	  </Reference>
+	  <Reference Include="DisCatSharp.CommandsNext">
+		  <HintPath>deps\DisCatSharp.CommandsNext.dll</HintPath>
+	  </Reference>
+	  <Reference Include="DisCatSharp.Experimental">
+		  <HintPath>deps\DisCatSharp.Experimental.dll</HintPath>
+	  </Reference>
+	  <Reference Include="DisCatSharp.Lavalink">
+		  <HintPath>deps\DisCatSharp.Lavalink.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Xorog.UniversalExtensions">
+		  <HintPath>deps\Xorog.UniversalExtensions.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Octokit">
+		  <HintPath>deps\Octokit.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Newtonsoft.Json">
+		  <HintPath>deps\Newtonsoft.Json.dll</HintPath>
+	  </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Translations\strings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

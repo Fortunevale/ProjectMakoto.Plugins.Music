@@ -1,4 +1,4 @@
-// Project Makoto
+﻿// Project Makoto
 // Copyright (C) 2024  Fortunevale
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -241,7 +241,7 @@ internal sealed class ModifyCommand : BaseCommand
 
                                     var asset = await (await ctx.Client.GetChannelAsync(ctx.Bot.status.SafeReadOnlyConfig.Channels.PlaylistAssets)).SendMessageAsync(new DiscordMessageBuilder().WithContent($"{ctx.User.Mention} `{ctx.User.GetUsernameWithIdentifier()} ({ctx.User.Id})`\n`{SelectedPlaylist.PlaylistName}`").WithFile($"{Guid.NewGuid()}.png", stream.stream));
 
-                                    SelectedPlaylist.PlaylistThumbnail = asset.Attachments[0].Url;
+                                    SelectedPlaylist.PlaylistThumbnail = asset.Attachments[0].Url.ToString();
                                 }
                                 catch (Exception ex)
                                 {

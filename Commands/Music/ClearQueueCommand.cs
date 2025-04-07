@@ -63,7 +63,7 @@ internal sealed class ClearQueueCommand : BaseCommand
                 Description = $"`{this.GetGuildString(CommandKey.ClearQueue.VoteStarted)} ({MusicPlugin.Plugin!.Guilds![ctx.Guild.Id].collectedClearQueueVotes.Count}/{Math.Ceiling((conn.Channel.Users.Count - 1.0) * 0.51)})`",
             }.AsAwaitingInput(ctx);
 
-            var builder = new DiscordMessageBuilder().WithEmbed(embed);
+            var builder = new DiscordMessageBuilder().AddEmbed(embed);
 
             DiscordButtonComponent DisconnectVote = new(ButtonStyle.Danger, Guid.NewGuid().ToString(), this.GetGuildString(CommandKey.ClearQueue.VoteButton), false, new DiscordComponentEmoji(DiscordEmoji.FromUnicode("🗑")));
             _ = builder.AddComponents(DisconnectVote);
@@ -110,7 +110,7 @@ internal sealed class ClearQueueCommand : BaseCommand
                             MusicPlugin.Plugin!.Guilds![ctx.Guild.Id].SongQueue = [];
                             MusicPlugin.Plugin!.Guilds![ctx.Guild.Id].collectedClearQueueVotes.Clear();
 
-                            _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                            _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                             {
                                 Description = this.GetString(CommandKey.ClearQueue.Cleared, true),
                             }.AsSuccess(ctx)));
@@ -118,7 +118,7 @@ internal sealed class ClearQueueCommand : BaseCommand
                         }
 
                         embed.Description = $"`{this.GetGuildString(CommandKey.ClearQueue.VoteStarted)} ({MusicPlugin.Plugin!.Guilds![ctx.Guild.Id].collectedClearQueueVotes.Count}/{Math.Ceiling((conn.Channel.Users.Count - 1.0) * 0.51)})`";
-                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(embed).AddComponents(DisconnectVote));
+                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(embed).AddComponents(DisconnectVote));
                     }
                 }).Add(ctx.Bot);
             }

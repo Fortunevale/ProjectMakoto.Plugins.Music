@@ -24,7 +24,7 @@ internal sealed class SaveCurrentCommand : BaseCommand
 
             if (ctx.Member.VoiceState is null || ctx.Member.VoiceState.Channel.Id != (await ctx.Client.CurrentUser.ConvertToMember(ctx.Guild)).VoiceState?.Channel?.Id)
             {
-                _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                 {
                     Description = this.GetString(CommandKey.NotSameChannel, true)
                 }.AsError(ctx)));
@@ -38,7 +38,7 @@ internal sealed class SaveCurrentCommand : BaseCommand
             {
                 if (MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Length >= 10)
                 {
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.PlayListLimit, true, new TVar("Count", 10)),
                     }.AsError(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -57,7 +57,7 @@ internal sealed class SaveCurrentCommand : BaseCommand
                                   $"`{this.GetString(CommandKey.Playlists.CreatePlaylist.FirstTracks).PadRight(pad)}`: {(SelectedTracks.IsNotNullAndNotEmpty() ? (SelectedTracks.Length > 1 ? $"`{SelectedTracks.Length} {this.GetString(CommandKey.Playlists.Tracks)}`" : $"[`{SelectedTracks[0].Title}`]({SelectedTracks[0].Url})") : this.GetString(this.t.Common.NotSelected, true))}"
                 }.AsAwaitingInput(ctx, this.GetString(CommandKey.Playlists.Title));
 
-                _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(embed)
+                _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(embed)
                     .AddComponents(new List<DiscordComponent> { SelectName, Finish })
                     .AddComponents(MessageComponents.GetCancelButton(ctx.DbUser, ctx.Bot)));
 
@@ -103,7 +103,7 @@ internal sealed class SaveCurrentCommand : BaseCommand
 
                     if (MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Length >= 10)
                     {
-                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                         {
                             Description = this.GetString(CommandKey.Playlists.PlayListLimit, true, new TVar("Count", 10)),
                         }.AsError(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -111,7 +111,7 @@ internal sealed class SaveCurrentCommand : BaseCommand
                         return;
                     }
 
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.CreatePlaylist.Creating, true),
                     }.AsLoading(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -124,7 +124,7 @@ internal sealed class SaveCurrentCommand : BaseCommand
 
                     MusicPlugin.Plugin.Users[ctx.User.Id].Playlists = MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Add(v);
 
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.CreatePlaylist.Created, true,
                             new TVar("Playlist", v.PlaylistName),

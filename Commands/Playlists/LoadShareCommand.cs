@@ -66,7 +66,7 @@ internal sealed class LoadShareCommand : BaseCommand
 
             DiscordButtonComponent Confirm = new(ButtonStyle.Success, Guid.NewGuid().ToString(), this.GetString(CommandKey.Playlists.LoadShare.ImportButton), false, new DiscordComponentEmoji(DiscordEmoji.FromUnicode("📥")));
 
-            _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(embed).AddComponents(new List<DiscordComponent> { Confirm, MessageComponents.GetCancelButton(ctx.DbUser, ctx.Bot) }));
+            _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(embed).AddComponents(new List<DiscordComponent> { Confirm, MessageComponents.GetCancelButton(ctx.DbUser, ctx.Bot) }));
 
             var e = await ctx.WaitForButtonAsync(TimeSpan.FromMinutes(1));
 
@@ -81,14 +81,14 @@ internal sealed class LoadShareCommand : BaseCommand
 
             if (e.GetCustomId() == Confirm.CustomId)
             {
-                _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                 {
                     Description = this.GetString(CommandKey.Playlists.LoadShare.Importing, true),
                 }.AsLoading(ctx, this.GetString(CommandKey.Playlists.Title))));
 
                 if (MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Length >= 10)
                 {
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.PlayListLimit, true, new TVar("Count", 10)),
                     }.AsError(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -97,7 +97,7 @@ internal sealed class LoadShareCommand : BaseCommand
 
                 MusicPlugin.Plugin.Users[ctx.User.Id].Playlists = MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Add(ImportJson);
 
-                _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                 {
                     Description = this.GetString(CommandKey.Playlists.LoadShare.Imported, true, new TVar("Name", ImportJson.PlaylistName)),
                 }.AsSuccess(ctx, this.GetString(CommandKey.Playlists.Title))));

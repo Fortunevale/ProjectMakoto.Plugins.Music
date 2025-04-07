@@ -65,7 +65,7 @@ internal sealed class DisconnectCommand : BaseCommand
                 Description = $"`{this.GetGuildString(CommandKey.Disconnect.VoteStarted, true)} ({MusicPlugin.Plugin!.Guilds![ctx.Guild.Id].collectedDisconnectVotes.Count}/{Math.Ceiling((conn.Channel.Users.Count - 1.0) * 0.51)})`",
             }.AsAwaitingInput(ctx);
 
-            var builder = new DiscordMessageBuilder().WithEmbed(embed);
+            var builder = new DiscordMessageBuilder().AddEmbed(embed);
 
             DiscordButtonComponent DisconnectVote = new(ButtonStyle.Danger, Guid.NewGuid().ToString(), this.GetGuildString(CommandKey.Disconnect.VoteButton), false, new DiscordComponentEmoji(DiscordEmoji.FromUnicode("⛔")));
             _ = builder.AddComponents(DisconnectVote);
@@ -114,7 +114,7 @@ internal sealed class DisconnectCommand : BaseCommand
                             _ = await conn.StopAsync();
                             await conn.DisconnectAsync();
 
-                            _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                            _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                             {
                                 Description = this.GetString(CommandKey.Disconnect.Disconnected, true)
                             }.AsSuccess(ctx)));
@@ -122,7 +122,7 @@ internal sealed class DisconnectCommand : BaseCommand
                         }
 
                         embed.Description = $"`{this.GetGuildString(CommandKey.Disconnect.VoteStarted, true)} ({MusicPlugin.Plugin!.Guilds![ctx.Guild.Id].collectedDisconnectVotes.Count}/{Math.Ceiling((conn.Channel.Users.Count - 1.0) * 0.51)})`";
-                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(embed).AddComponents(DisconnectVote));
+                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(embed).AddComponents(DisconnectVote));
                     }
                 }).Add(ctx.Bot);
             }

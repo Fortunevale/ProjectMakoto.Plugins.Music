@@ -41,7 +41,7 @@ internal sealed class ShareCommand : BaseCommand
             if (!Directory.Exists($"PlaylistShares/{ctx.User.Id}"))
                 _ = Directory.CreateDirectory($"PlaylistShares/{ctx.User.Id}");
 
-            _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder()
+            _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder()
             {
                 Description = this.GetString(CommandKey.Playlists.Share.Shared, true,
                 new TVar("Command", $"{ctx.Prefix}playlists load-share {ctx.User.Id} {ShareCode}")),

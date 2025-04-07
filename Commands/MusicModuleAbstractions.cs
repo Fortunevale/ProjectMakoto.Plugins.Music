@@ -89,7 +89,7 @@ internal static class MusicModuleAbstractions
             var Spotify = new DiscordButtonComponent(ButtonStyle.Primary, Guid.NewGuid().ToString(), "Spotify", false, EmojiTemplates.GetSpotify(ctx.Bot).ToComponent());
 
             _ = await ctx.BaseCommand.RespondOrEdit(
-                new DiscordMessageBuilder().WithEmbed(embed)
+                new DiscordMessageBuilder().AddEmbed(embed)
                 .AddComponents(new List<DiscordComponent> { YouTube, SoundCloud, Spotify }));
 
             var Menu1 = await ctx.WaitForButtonAsync(TimeSpan.FromMinutes(2));

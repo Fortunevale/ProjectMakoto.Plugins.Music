@@ -62,7 +62,7 @@ internal sealed class SkipCommand : BaseCommand
                 Description = $"`{this.GetGuildString(CommandKey.Skip.VoteStarted)} ({MusicPlugin.Plugin!.Guilds![ctx.Guild.Id].collectedSkips.Count}/{Math.Ceiling((conn.Channel.Users.Count - 1.0) * 0.51)})`",
             }.AsAwaitingInput(ctx);
 
-            var builder = new DiscordMessageBuilder().WithEmbed(embed);
+            var builder = new DiscordMessageBuilder().AddEmbed(embed);
 
             DiscordButtonComponent SkipSongVote = new(ButtonStyle.Danger, Guid.NewGuid().ToString(), this.GetGuildString(CommandKey.Skip.VoteButton), false, new DiscordComponentEmoji(DiscordEmoji.FromUnicode("⏩")));
             _ = builder.AddComponents(SkipSongVote);
@@ -108,7 +108,7 @@ internal sealed class SkipCommand : BaseCommand
                         {
                             _ = await conn.StopAsync();
 
-                            _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                            _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                             {
                                 Description = this.GetString(CommandKey.Skip.Skipped, true),
                             }.AsSuccess(ctx)));
@@ -116,7 +116,7 @@ internal sealed class SkipCommand : BaseCommand
                         }
 
                         embed.Description = $"`{this.GetGuildString(CommandKey.Skip.VoteStarted)} ({MusicPlugin.Plugin!.Guilds![ctx.Guild.Id].collectedSkips.Count}/{Math.Ceiling((conn.Channel.Users.Count - 1.0) * 0.51)})`";
-                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(embed).AddComponents(SkipSongVote));
+                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(embed).AddComponents(SkipSongVote));
                     }
                 }).Add(ctx.Bot);
             }

@@ -28,7 +28,7 @@ internal sealed class ManageCommand : BaseCommand
                 return countInt;
             }
 
-            var builder = new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder()
+            var builder = new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder()
             {
                 Description = $"{(MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Length > 0 ? string.Join("\n", MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Select(x => $"**{GetCount()}**. `{x.PlaylistName.SanitizeForCode()}`: `{x.List.Length} {this.GetString(CommandKey.Playlists.Tracks)}`")) : this.GetString(CommandKey.Playlists.Manage.NoPlaylists, true))}"
             }.AsAwaitingInput(ctx, this.GetString(CommandKey.Playlists.Title)));

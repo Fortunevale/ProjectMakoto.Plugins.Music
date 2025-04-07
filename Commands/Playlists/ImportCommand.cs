@@ -26,7 +26,7 @@ internal sealed class ImportCommand : BaseCommand
 
             if (MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Length >= 10)
             {
-                _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                 {
                     Description = this.GetString(CommandKey.Playlists.PlayListLimit, true, new TVar("Count", 10)),
                 }.AsError(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -36,7 +36,7 @@ internal sealed class ImportCommand : BaseCommand
             var Link = new DiscordButtonComponent(ButtonStyle.Primary, Guid.NewGuid().ToString(), this.GetString(CommandKey.Playlists.Import.Link), false, new DiscordComponentEmoji(DiscordEmoji.FromUnicode("↘")));
             var ExportedPlaylist = new DiscordButtonComponent(ButtonStyle.Primary, Guid.NewGuid().ToString(), this.GetString(CommandKey.Playlists.Import.ExportedPlaylist), false, new DiscordComponentEmoji(DiscordEmoji.FromUnicode("📂")));
 
-            _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+            _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
             {
                 Description = this.GetString(CommandKey.Playlists.Import.ImportMethod, true),
             }.AsAwaitingInput(ctx, this.GetString(CommandKey.Playlists.Title)))
@@ -84,7 +84,7 @@ internal sealed class ImportCommand : BaseCommand
 
                 if (loadResult.LoadType == LavalinkLoadResultType.Error)
                 {
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.Import.NotLoaded, true),
                     }.AsError(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -96,14 +96,14 @@ internal sealed class ImportCommand : BaseCommand
 
                     if (MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Length >= 10)
                     {
-                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                         {
                             Description = this.GetString(CommandKey.Playlists.PlayListLimit, true, new TVar("Count", 10)),
                         }.AsError(ctx, this.GetString(CommandKey.Playlists.Title))));
                         return;
                     }
 
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.Import.Creating, true),
                     }.AsLoading(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -116,7 +116,7 @@ internal sealed class ImportCommand : BaseCommand
 
                     MusicPlugin.Plugin.Users[ctx.User.Id].Playlists = MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Add(v);
 
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.Import.Created, true,
                         new TVar("Name", v.PlaylistName),
@@ -127,7 +127,7 @@ internal sealed class ImportCommand : BaseCommand
                 }
                 else
                 {
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.Import.NotLoaded, true),
                     }.AsError(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -140,7 +140,7 @@ internal sealed class ImportCommand : BaseCommand
                 {
                     _ = Menu.Result.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
 
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.Import.UploadExport, true, new TVar("Command", $"{ctx.Prefix}upload")),
                     }.AsAwaitingInput(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -161,7 +161,7 @@ internal sealed class ImportCommand : BaseCommand
                         return;
                     }
 
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.Import.Importing, true),
                     }.AsLoading(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -177,7 +177,7 @@ internal sealed class ImportCommand : BaseCommand
 
                     if (MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Length >= 10)
                     {
-                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                        _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                         {
                             Description = this.GetString(CommandKey.Playlists.PlayListLimit, true, new TVar("Count", 10)),
                         }.AsError(ctx, this.GetString(CommandKey.Playlists.Title))));
@@ -193,7 +193,7 @@ internal sealed class ImportCommand : BaseCommand
 
                     MusicPlugin.Plugin.Users[ctx.User.Id].Playlists = MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Add(v);
 
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.Import.Created, true,
                         new TVar("Name", v.PlaylistName),
@@ -204,7 +204,7 @@ internal sealed class ImportCommand : BaseCommand
                 }
                 catch (Exception ex)
                 {
-                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                     {
                         Description = this.GetString(CommandKey.Playlists.Import.ImportFailed, true),
                     }.AsError(ctx, this.GetString(CommandKey.Playlists.Title))));

@@ -33,14 +33,14 @@ internal sealed class DeleteCommand : BaseCommand
 
             var SelectedPlaylist = MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.First(x => x.PlaylistId == playlistId);
 
-            _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+            _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
             {
                 Description = this.GetString(CommandKey.Playlists.Delete.Deleting, true, new TVar("Name", SelectedPlaylist.PlaylistName)),
             }.AsLoading(ctx, this.GetString(CommandKey.Playlists.Title))));
 
             MusicPlugin.Plugin.Users[ctx.User.Id].Playlists = MusicPlugin.Plugin.Users[ctx.User.Id].Playlists.Remove(x => x.PlaylistId, SelectedPlaylist);
 
-            _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+            _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
             {
                 Description = this.GetString(CommandKey.Playlists.Delete.Deleted, true, new TVar("Name", SelectedPlaylist.PlaylistName)),
             }.AsSuccess(ctx, this.GetString(CommandKey.Playlists.Title))));

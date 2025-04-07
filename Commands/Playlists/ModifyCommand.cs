@@ -91,7 +91,7 @@ internal sealed class ModifyCommand : BaseCommand
                 embed.Title = $"{this.GetString(CommandKey.Playlists.Modify.ModifyingPlaylist)}: `{SelectedPlaylist.PlaylistName}`";
                 embed.Description = Description;
                 embed.Thumbnail = new DiscordEmbedBuilder.EmbedThumbnail { Url = (SelectedPlaylist.PlaylistThumbnail.IsNullOrWhiteSpace() ? "" : SelectedPlaylist.PlaylistThumbnail) };
-                _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(embed)
+                _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(embed)
                     .AddComponents(new List<DiscordComponent> { PreviousPage, NextPage })
                     .AddComponents(new List<DiscordComponent> { AddSong, RemoveSong, RemoveDuplicates })
                     .AddComponents(new List<DiscordComponent> { PlaylistName, ChangePlaylistColor, ChangePlaylistThumbnail })
@@ -205,7 +205,7 @@ internal sealed class ModifyCommand : BaseCommand
                                             $"⚠ {this.GetString(CommandKey.Playlists.ThumbnailModerationNote, true)}",
                                     }.AsAwaitingInput(ctx, this.GetString(CommandKey.Playlists.Title));
 
-                                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(embed));
+                                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(embed));
 
                                     (Stream stream, int fileSize) stream;
 
@@ -339,7 +339,7 @@ internal sealed class ModifyCommand : BaseCommand
 
                                 DiscordStringSelectComponent Tracks = new(this.GetString(CommandKey.Playlists.Modify.DeleteNote), TrackList, Guid.NewGuid().ToString(), 1, TrackList.Count);
 
-                                _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(embed).AddComponents(Tracks));
+                                _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(embed).AddComponents(Tracks));
 
                                 var Response = await s.GetInteractivity().WaitForSelectAsync(ctx.ResponseMessage, x => x.User.Id == ctx.User.Id, ComponentType.StringSelect);
 
@@ -358,7 +358,7 @@ internal sealed class ModifyCommand : BaseCommand
 
                                 if (SelectedPlaylist.List.Length <= 0)
                                 {
-                                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                                    _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                                     {
                                         Description = this.GetString(CommandKey.Playlists.Delete.Deleted, true, new TVar("Name", SelectedPlaylist.PlaylistName)),
                                     }.AsSuccess(ctx, this.GetString(CommandKey.Playlists.Title))));

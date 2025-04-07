@@ -91,7 +91,7 @@ internal sealed class QueueCommand : BaseCommand
                 if ((CurrentPage * 10) + 10 >= MusicPlugin.Plugin!.Guilds![ctx.Guild.Id].SongQueue.Length)
                     NextPage = NextPage.Disable();
 
-                _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder
+                _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder
                 {
                     Description = Description
                 }.AsInfo(ctx))

@@ -35,7 +35,7 @@ internal sealed class ExportCommand : BaseCommand
 
             using (MemoryStream stream = new(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(SelectedPlaylist, Formatting.Indented))))
             {
-                _ = await this.RespondOrEdit(new DiscordMessageBuilder().WithEmbed(new DiscordEmbedBuilder()
+                _ = await this.RespondOrEdit(new DiscordMessageBuilder().AddEmbed(new DiscordEmbedBuilder()
                 {
                     Description = this.GetString(CommandKey.Playlists.Export.Exported, true, new TVar("Name", SelectedPlaylist.PlaylistName)),
                 }.AsInfo(ctx, this.GetString(CommandKey.Playlists.Title))).WithFile($"{Guid.NewGuid().ToString().Replace("-", "").ToLower()}.json", stream));
